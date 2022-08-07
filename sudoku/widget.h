@@ -31,6 +31,8 @@ public:
     {
         _num[r][c]=x;
     }
+    template<int n,int m>
+    void shuffle(int (&mat)[n][m],int nShuffle=1);
 private:
     Ui::Widget *ui;
     int _num[9][9];//预设的9*9数独

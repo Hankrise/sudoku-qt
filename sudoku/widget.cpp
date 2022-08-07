@@ -11,7 +11,7 @@
 #include<QMessageBox>
 #include<QRandomGenerator>
 #include<QString>
-
+#include<QTime>
 
 #define cout qDebug().noquote().nospace()
 //我这里#define是为了调试方便
@@ -66,6 +66,7 @@ void Widget::create(int cnt)//随机生成一个一定有解的状态，cnt表�
             set_Num(i,j,num[i][j]);//我们这里还有记好我们生成的数独，因为我们使用查看答案还是要用到的
         }
     }
+
     //调试代码
     //for(int i=0;i<9;i++)
             //cout<<num[i][0]<<" "<<num[i][1]<<" "<<num[i][2]<<" "<<num[i][3]<<" "<<num[i][4]<<" "<<num[i][5]<<" "<<num[i][6]<<" "<<num[i][7]<<" "<<num[i][8];
@@ -220,11 +221,17 @@ Widget::Widget(QWidget *parent)
             for(int j=0;j<9;j++)
             {
                 num[i][j]++;
+                set_Num(i,j,num[i][j]);
             }
         }
         //调试代码
-        //for(int i=0;i<9;i++)
-                //cout<<num[i][0]<<" "<<num[i][1]<<" "<<num[i][2]<<" "<<num[i][3]<<" "<<num[i][4]<<" "<<num[i][5]<<" "<<num[i][6]<<" "<<num[i][7]<<" "<<num[i][8];
+        for(int i=0;i<9;i++)
+                cout<<num[i][0]<<" "<<num[i][1]<<" "<<num[i][2]<<" "<<num[i][3]<<" "<<num[i][4]<<" "<<num[i][5]<<" "<<num[i][6]<<" "<<num[i][7]<<" "<<num[i][8];
+        cout<<endl;
+        shuffle(num,10);
+        for(int i=0;i<9;i++)
+                cout<<num[i][0]<<" "<<num[i][1]<<" "<<num[i][2]<<" "<<num[i][3]<<" "<<num[i][4]<<" "<<num[i][5]<<" "<<num[i][6]<<" "<<num[i][7]<<" "<<num[i][8];
+cout<<endl;
         bool s[81]={0};
         int count=0;
         while(count!=cnt)
@@ -312,8 +319,61 @@ bool Widget::check()
     return true;
 }
 
+
+
+
+
 Widget::~Widget()
 {
     delete ui;
 }
 
+
+
+template<int n, int m>
+void Widget::shuffle(int (&mat)[n][m], int nShuffle)
+{
+    int unShf[9][9];
+    memcpy(unShf,mat,sizeof(unShf));
+    QRandomGenerator rndShuffle;
+    //rndShuffle.seed(time(0));
+    rndShuffle.seed(QTime(0,0,0).secsTo(QTime::currentTime()));
+    while(nShuffle--){
+        bool rFlag[9]={0};
+        bool cFlag[9]={0};
+        int rShf[9]={0};
+        int cShf[9]={0};
+        int tmp=0;
+        for(int i=0;i<9;){
+            tmp=rndShuffle()%3+(i/3)*3;
+            if(!rFlag[tmp]){
+                rFlag[tmp]=1;
+                rShf[i]=tmp;
+                i++;
+            }
+        }
+        for(int i=0;i<9;){
+            tmp=rndShuffle()%3+(i/3)*3;
+            if(!cFlag[tmp]){
+                cFlag[tmp]=1;
+                cShf[i]=tmp;
+                i++;
+            }
+        }
+
+        for(int i=0;i<9;i++){
+            for(int j=0;j<9;j++){
+                mat[i][j]=unShf[rShf[i]][j];
+            }
+        }
+        memcpy(unShf,mat,sizeof(unShf));
+       for(int i=0;i<9;i++){
+            for(int j=0;j<9;j++){
+                mat[i][j]=unShf[i][cShf[j]];
+            }
+        }
+   //cout<<rShf[0]<<" "<<rShf[1]<<" "<<rShf[2]<<" "<<rShf[3]<<" "<<rShf[4]<<" "<<rShf[5]<<" "<<rShf[6]<<" "<<rShf[7]<<" "<<rShf[8];
+   //cout<<cShf[0]<<" "<<cShf[1]<<" "<<cShf[2]<<" "<<cShf[3]<<" "<<cShf[4]<<" "<<cShf[5]<<" "<<cShf[6]<<" "<<cShf[7]<<" "<<cShf[8];
+   //cout<<endl;
+   }
+}
