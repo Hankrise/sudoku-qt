@@ -1,5 +1,6 @@
-#include "widget.h"
+﻿#include "widget.h"
 #include "ui_widget.h"
+#include"mypushbutton.h"
 #include"form.h"
 #include<QDebug>
 #include<QPushButton>
@@ -10,7 +11,7 @@
 #include<QMessageBox>
 #include<QRandomGenerator>
 #include<QString>
-#include"mypushbutton.h"
+
 
 #define cout qDebug().noquote().nospace()
 //我这里#define是为了调试方便
@@ -293,7 +294,7 @@ void Widget::clearNum(int r, int c)
 //这个可能等会就不用了
 bool Widget::check()
 {
-    int col[9]={0},row[9]={0},cell[3][3]={0};
+    int col[9]={0},row[9]={0},cell[3][3]={{0}};
     for(int i=0;i<9;i++)
     {
         for(int j=0;j<9;j++)

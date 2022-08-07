@@ -18,10 +18,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     form.cpp \
     main.cpp \
+    mypushbutton.cpp \
     widget.cpp
 
 HEADERS += \
     form.h \
+    mypushbutton.h \
     widget.h
 
 FORMS += \

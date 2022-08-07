@@ -1,12 +1,11 @@
-#include "form.h"
+﻿#include "form.h"
 #include "ui_form.h"
 #include<QPushButton>
 #include"widget.h"
 #define cout qDebug().noquote().nospace()
 
-Form::Form(QPoint point,QWidget *parent,Widget* widget,int r,int c) :
-    QDialog(parent),_widget(widget),_r(r),_c(c),
-    ui(new Ui::Form)
+Form::Form(QPoint point,QWidget *parent,Widget* widget,int r,int c)
+    :QDialog(parent),ui(new Ui::Form),_widget(widget),_r(r),_c(c)
 {
     ui->setupUi(this);
     //假设四个参数是x，y，a，b，从x，y这个位置开始打开一个a * b大小的窗口
