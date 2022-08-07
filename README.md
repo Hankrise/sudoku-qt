@@ -112,3 +112,36 @@
 ![](pics/220807-bugfix-addskin-009.png)
 ![](pics/220807-bugfix-addskin-010.png)
 ![](pics/220807-bugfix-addskin-011.png)
+
+## 220807_sudoku-total-merge
+
+sudoku-start 目录为同学单独写的开始界面。
+
+将主目录 sudoku 与其进行最终融合。
+
+先前存在问题以及修改的地方：
+
+- 没太搞懂怎么刷新题目，就是不可修改的按钮，以及刷新已填写按钮。---未解决。只能把bug当feature了
+- 提交成绩后窗口忘关闭了，可以反复提交。---已修改
+- 合并后构造函数需要补参数---ok
+- 只要在游戏界面切换到困难，再切换到简单，虽然显示是简单，但题目仍然是困难。---已修改 action要给cnt赋值，再使用cnt
+- 切换难度后，重新生成题目，难度不匹配（和上一条一个意思）
+- 切换难度后，数独按钮无法点击。---已修改
+- 修改菜单栏大小--ok
+- 为各种widget以及窗口补小图标，补图片，修改文字样式---ok,可能改不全，大概可以了
+- 修改按钮样式---ok
+- 各种其他美化
+
+程序截图如下：
+![](pics/220807_sudoku-total-merge-001.png)
+![](pics/220807_sudoku-total-merge-002.png)
+![](pics/220807_sudoku-total-merge-003.png)
+![](pics/220807_sudoku-total-merge-004.png)
+![](pics/220807_sudoku-total-merge-005.png)
+![](pics/220807_sudoku-total-merge-006.png)
+![](pics/220807_sudoku-total-merge-007.png)
+![](pics/220807_sudoku-total-merge-008.png)
+![](pics/220807_sudoku-total-merge-009.png)
+![](pics/220807_sudoku-total-merge-010.png)
+![](pics/220807_sudoku-total-merge-011.png)
+![](pics/220807_sudoku-total-merge-012.png)

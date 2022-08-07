@@ -10,6 +10,8 @@ Form::Form(QPoint point,QWidget *parent,Widget* widget,int r,int c,QString s) :
     ui(new Ui::Form)
 {
     ui->setupUi(this);
+    setWindowIcon(QIcon(":/image/s4.png"));
+    this->setWindowTitle(QStringLiteral("请选择"));
     //假设四个参数是x，y，a，b，从x，y这个位置开始打开一个a * b大小的窗口
     this->setGeometry(point.x(),point.y(),this->width(),this->height());
     //但是如果一move的话还是从0，0开始move
@@ -19,7 +21,7 @@ Form::Form(QPoint point,QWidget *parent,Widget* widget,int r,int c,QString s) :
     QString img[9];
     for(int i=0;i<9;i++){
         img[i]=QString(":/image/")+skin+QString("/")+QString::number(i+1)+QString(".png");
-        _icon[i].addFile(img[i], QSize(50,50), QIcon::Normal, QIcon::Off);
+        _icon[i].addFile(img[i], QSize(60,60), QIcon::Normal, QIcon::Off);
     }
 /*
     _icon[0].addFile(QString::fromUtf8(":/image/1.png"), QSize(50,50), QIcon::Normal, QIcon::Off);

@@ -36,37 +36,6 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QMenuBar" name="sudokuBar">
-     <property name="baseSize">
-      <size>
-       <width>0</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>12</pointsize>
-      </font>
-     </property>
-     <widget class="QMenu" name="menu">
-      <property name="title">
-       <string>修改难度</string>
-      </property>
-      <addaction name="separator"/>
-      <addaction name="actionsimple"/>
-      <addaction name="actionmiddle"/>
-      <addaction name="actionhard"/>
-     </widget>
-     <widget class="QMenu" name="diffShower">
-      <property name="title">
-       <string>难度</string>
-      </property>
-     </widget>
-     <addaction name="diffShower"/>
-     <addaction name="menu"/>
-    </widget>
-   </item>
-   <item>
     <layout class="QGridLayout" name="gridLayout">
      <property name="sizeConstraint">
       <enum>QLayout::SetFixedSize</enum>
@@ -184,21 +153,6 @@
     </widget>
    </item>
   </layout>
-  <action name="actionsimple">
-   <property name="text">
-    <string>简单模式</string>
-   </property>
-  </action>
-  <action name="actionmiddle">
-   <property name="text">
-    <string>普通模式</string>
-   </property>
-  </action>
-  <action name="actionhard">
-   <property name="text">
-    <string>困难模式</string>
-   </property>
-  </action>
  </widget>
  <resources/>
  <connections/>

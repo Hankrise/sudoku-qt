@@ -18,7 +18,7 @@ class Widget : public QWidget
     Q_OBJECT
 
 public:
-    Widget(QWidget *parent = nullptr);
+    Widget(QWidget *parent = nullptr,int t=1);
     ~Widget();
     void clearNum(int r,int c);//清除按钮上的数字
     void clearAllNum();
@@ -36,6 +36,7 @@ public:
     }
 private slots:
     void updateTimer();           // 计时//这里也是计时用
+    //void style();
 private:
     template<int n,int m>
     void shuffle(int (&mat)[n][m],int nShuffle=1);
@@ -48,7 +49,7 @@ private:
     QTimer *timer;     // 计时器//也是计时用
     QLabel *timeLabel; // 计时数字
     QIcon icon[18];
-    int type=0;
+    int type;
     QString skin=QStringLiteral("blue");
 };
 /*

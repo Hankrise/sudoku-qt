@@ -48,5 +48,6 @@ void scoreinput::initUI()
         sqlTest.queryTable();
         qDebug() << endl;
         sqlTest.closeDb();
+        this->hide();
     });
 }
