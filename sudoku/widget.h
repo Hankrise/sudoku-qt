@@ -6,7 +6,7 @@
 #include"mypushbutton.h"
 #include<QTimer>
 #include<QLabel>
-
+#include<QMenu>
 QT_BEGIN_NAMESPACE
 
 namespace Ui { class Widget; }
@@ -49,5 +49,22 @@ private:
     QLabel *timeLabel; // 计时数字
     QIcon icon[18];
     int type=0;
+    QString skin=QStringLiteral("blue");
 };
+/*
+class mQMenu:public QMenu{
+        Q_OBJECT
+public:
+    explicit mQMenu(QWidget *parent = nullptr);
+    //自定义信号
+    void mousePressEvent(QMouseEvent *);
+signals:
+    //信号没有返回值，可以有参数,信号函数不需要定义，只需要声明
+    void menuclicked();
+
+};
+void mQMenu::mousePressEvent(QMouseEvent *){
+    emit menuclicked();
+}
+*/
 #endif // WIDGET_H

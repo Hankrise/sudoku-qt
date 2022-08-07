@@ -5,8 +5,8 @@
 #include<QSize>
 #define cout qDebug().noquote().nospace()
 
-Form::Form(QPoint point,QWidget *parent,Widget* widget,int r,int c) :
-    QDialog(parent),_widget(widget),_r(r),_c(c),
+Form::Form(QPoint point,QWidget *parent,Widget* widget,int r,int c,QString s) :
+    QDialog(parent),_widget(widget),_r(r),_c(c),skin(s),
     ui(new Ui::Form)
 {
     ui->setupUi(this);
@@ -16,6 +16,12 @@ Form::Form(QPoint point,QWidget *parent,Widget* widget,int r,int c) :
     this->move(point.x()+65,point.y()-this->height()/2);
     QIcon _icon[9];
     //设置好9个图标Icon
+    QString img[9];
+    for(int i=0;i<9;i++){
+        img[i]=QString(":/image/")+skin+QString("/")+QString::number(i+1)+QString(".png");
+        _icon[i].addFile(img[i], QSize(50,50), QIcon::Normal, QIcon::Off);
+    }
+/*
     _icon[0].addFile(QString::fromUtf8(":/image/1.png"), QSize(50,50), QIcon::Normal, QIcon::Off);
     _icon[1].addFile(QString::fromUtf8(":/image/2.png"), QSize(50,50), QIcon::Normal, QIcon::Off);
     _icon[2].addFile(QString::fromUtf8(":/image/3.png"), QSize(50,50), QIcon::Normal, QIcon::Off);
@@ -26,7 +32,7 @@ Form::Form(QPoint point,QWidget *parent,Widget* widget,int r,int c) :
     _icon[7].addFile(QString::fromUtf8(":/image/8.png"), QSize(50,50), QIcon::Normal, QIcon::Off);
     _icon[8].addFile(QString::fromUtf8(":/image/9.png"), QSize(50,50), QIcon::Normal, QIcon::Off);
 
-
+*/
     for(int i=0;i<9;i++)//设置好9个按钮
     {
         _btn[i].setFixedSize(45,45);

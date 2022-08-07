@@ -36,7 +36,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QMenuBar" name="widget_2">
+    <widget class="QMenuBar" name="sudokuBar">
      <widget class="QMenu" name="menu">
       <property name="title">
        <string>修改难度</string>
@@ -46,12 +46,6 @@
       <addaction name="actionmiddle"/>
       <addaction name="actionhard"/>
      </widget>
-     <widget class="QMenu" name="menu_2">
-      <property name="title">
-       <string>更多</string>
-      </property>
-      <addaction name="actionHighScore"/>
-     </widget>
      <widget class="QMenu" name="diffShower">
       <property name="title">
        <string>难度</string>
@@ -59,7 +53,6 @@
      </widget>
      <addaction name="diffShower"/>
      <addaction name="menu"/>
-     <addaction name="menu_2"/>
     </widget>
    </item>
    <item>
@@ -193,11 +186,6 @@
   <action name="actionhard">
    <property name="text">
     <string>困难模式</string>
-   </property>
-  </action>
-  <action name="actionHighScore">
-   <property name="text">
-    <string>成绩排行榜</string>
    </property>
   </action>
  </widget>

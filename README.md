@@ -1,6 +1,10 @@
 # 简介
 
+数独游戏
+
 一个Qt培训课程，小组做的项目。
+
+程序写的都队
 
 从 https://github.com/verynewabie/sudoku fork过来的。
 
@@ -63,3 +67,48 @@
 ![](pics/220806_shuffle-highscore-merged-04.png)
 
 ![](pics/220806_shuffle-highscore-merged-05.png)
+
+## 220807-bugfix-addskin
+
+先前代码存在的问题：
+
+- 重新生成局面  没有打乱
+有两处没有加打乱代码
+    shuffle(num,10);//打乱
+    for(int i=0;i<9;i++)for(int j=0;j<9;j++)set_Num(i,j,num[i][j]);//需要打乱后再set
+- 高分榜换成一级
+![](pics/220807-bugfix-addskin-01.png)
+估计得手动代码添加QACtion直接上Qmeubar
+![](pics/220807-bugfix-addskin-02.png)
+- 换肤 显示皮肤名称
+下拉选项 显示状态 ok
+小弹窗 ok
+大窗口 not ok
+![](pics/220807-bugfix-addskin-03.png)
+- :-1: error: LNK1181: 无法打开输入文件“debug\SqliteOperator.obj”
+![](pics/220807-bugfix-addskin-04.png)
+
+至此
+
+打乱函数已正常调用，
+
+目录不出现空格数据库就没问题，
+
+高分榜升为一级菜单。
+
+添加皮肤功能，Form小窗口正常，数独窗口只对新点击的按钮有效。
+
+不知道怎么刷新当前已存在的数字，时间也不够了，把bug当feature吧。
+
+当前程序截图如下：
+![](pics/220807-bugfix-addskin-001.png)
+![](pics/220807-bugfix-addskin-002.png)
+![](pics/220807-bugfix-addskin-003.png)
+![](pics/220807-bugfix-addskin-004.png)
+![](pics/220807-bugfix-addskin-005.png)
+![](pics/220807-bugfix-addskin-006.png)
+![](pics/220807-bugfix-addskin-007.png)
+![](pics/220807-bugfix-addskin-008.png)
+![](pics/220807-bugfix-addskin-009.png)
+![](pics/220807-bugfix-addskin-010.png)
+![](pics/220807-bugfix-addskin-011.png)

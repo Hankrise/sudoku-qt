@@ -12,7 +12,6 @@
 #include<QRandomGenerator>
 #include<QString>
 #include<QTimer>
-#include"mypushbutton.h"
 #include<QTime>
 #include<QMainWindow>
 #include"highscore.h"
@@ -23,7 +22,7 @@
 void Widget::chooseOne(int r,int c)
 {
     QPoint point=this->cursor().pos();//获取鼠标位置
-    Form* fm = new Form(point,0,this,r,c);//新建一个9选1的
+    Form* fm = new Form(point,0,this,r,c,skin);//新建一个9选1的
     fm->exec();
 }
 
@@ -162,6 +161,7 @@ Widget::Widget(QWidget *parent)
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(updateTimer()));
 
+/*
     icon[0].addFile(QString::fromUtf8(":/image/1.png"));
     icon[1].addFile(QString::fromUtf8(":/image/2.png"));
     icon[2].addFile(QString::fromUtf8(":/image/3.png"));
@@ -170,7 +170,14 @@ Widget::Widget(QWidget *parent)
     icon[5].addFile(QString::fromUtf8(":/image/6.png"));
     icon[6].addFile(QString::fromUtf8(":/image/7.png"));
     icon[7].addFile(QString::fromUtf8(":/image/8.png"));
-    icon[8].addFile(QString::fromUtf8(":/image/9.png"));
+    icon[8].addFile(QString::fromUtf8(":/image/9.png"));*/
+
+    QString img[9];
+    for(int i=0;i<9;i++){
+        img[i]=QString(":/image/")+skin+QString("/")+QString::number(i+1)+QString(".png");
+        icon[i].addFile(img[i]);
+    }
+
     icon[9].addFile(QString::fromUtf8(":/image/hong.jpg"));
     icon[10].addFile(QString::fromUtf8(":/image/lv.jpg"));
     icon[11].addFile(QString::fromUtf8(":/image/lan.jpg"));
@@ -208,7 +215,7 @@ Widget::Widget(QWidget *parent)
             ui->gridLayout->addWidget(&_btn[r][c],r,c);
             connect(&_btn[r][c],&QPushButton::clicked,[=](){
                 QPoint point=this->cursor().pos();
-                Form* fm = new Form(point,0,this,r,c);
+                Form* fm = new Form(point,0,this,r,c,skin);
                 fm->exec();
             });
         }
@@ -300,9 +307,11 @@ Widget::Widget(QWidget *parent)
             for(int j=0;j<9;j++)
             {
                 num[i][j]++;
-                set_Num(i,j,num[i][j]);//我们这里还有记好我们生成的数独，因为我们使用查看答案还是要用到的
+                //set_Num(i,j,num[i][j]);//我们这里还有记好我们生成的数独，因为我们使用查看答案还是要用到的
             }
         }
+        shuffle(num,10);//打乱
+        for(int i=0;i<9;i++)for(int j=0;j<9;j++)set_Num(i,j,num[i][j]);//需要打乱后再set
         //调试代码
         //for(int i=0;i<9;i++)
                 //cout<<num[i][0]<<" "<<num[i][1]<<" "<<num[i][2]<<" "<<num[i][3]<<" "<<num[i][4]<<" "<<num[i][5]<<" "<<num[i][6]<<" "<<num[i][7]<<" "<<num[i][8];
@@ -402,13 +411,113 @@ Widget::Widget(QWidget *parent)
                 ui->diffShower->setTitle(QStringLiteral("困难模式"));
 
     });
-    connect(ui->actionHighScore,&QAction::triggered,[=](){
+    //添加排行榜
+    QAction* actionHighScore=new QAction(QStringLiteral("排行榜"));
+    ui->sudokuBar->addAction(actionHighScore);
+    connect(actionHighScore,&QAction::triggered,[=](){
+            QMainWindow* hs=new highscore();
+            hs->show();
+        });
+    /*connect(ui->actionHighScore,&QAction::triggered,[=](){
         QMainWindow* hs=new highscore();
         hs->show();
+    });*/
+    //hovered triggered mousePressEvent
+/*
+    connect(ui->menuHighScore,&mQMenu::menuclicked,[=](){
+        QMainWindow* hs=new highscore();
+        hs->show();
+    });*/
+    //添加皮肤
+    QMenu* skinMenu=new QMenu(QStringLiteral("使用皮肤"));
+    QAction* humanSkin=new QAction(QStringLiteral("human"));
+    QAction* blueSkin=new QAction(QStringLiteral("blue"));
+    QAction* colorfulSkin=new QAction(QStringLiteral("colorful"));
+    QAction* dinosaurSkin=new QAction(QStringLiteral("dinosaur"));
+    QAction* jointSkin=new QAction(QStringLiteral("joint"));
+    QAction* lightSkin=new QAction(QStringLiteral("light"));
+    QAction* pokerSkin=new QAction(QStringLiteral("poker"));
+    QList<QAction*> skinList;
+    skinList.append(humanSkin);
+    skinList.append(blueSkin);
+    skinList.append(colorfulSkin);
+    skinList.append(dinosaurSkin);
+    skinList.append(jointSkin);
+    skinList.append(lightSkin);
+    skinList.append(pokerSkin);
+    skinMenu->addActions(skinList);
+    ui->sudokuBar->addMenu(skinMenu);
+    QAction* currentSkin=new QAction(QStringLiteral("blue"));
+    ui->sudokuBar->addAction(currentSkin);
+    //connect(skinMenu,&QMenu::triggered,[&](){
+    //connect(skinMenu,&QAction::triggered,[=](){
+    /*connect(humanSkin,&QAction::triggered,[=](){
+        //QAction *skinSelected = (QAction*)this->sender();
+        QAction *skinSelected = qobject_cast<QAction *>(sender());
+        cout<<skinSelected;
+        //cout<<this->sender();
+    });*/
+
+    connect(humanSkin,&QAction::triggered,[=](){const QString str="human";skin=str;currentSkin->setText(str);    QString img[9];
+        for(int i=0;i<9;i++){
+            img[i]=QString(":/image/")+skin+QString("/")+QString::number(i+1)+QString(".png");
+            icon[i].addFile(img[i]);
+        }
+
     });
+    /*connect(blueSkin,&QAction::triggered,[=](){const QString str="blue";skin=str;currentSkin->setText(str);
+        for(int i=0;i<9;i++){
+            img[i]=QString(":/image/")+skin+QString("/")+QString::number(i+1)+QString(".png");
+            icon[i].addFile(img[i]);
+        }
+    });*/
+    connect(blueSkin,&QAction::triggered,[=](){const QString str="blue";skin=str;currentSkin->setText(str);    QString img[9];
+        for(int i=0;i<9;i++){
+            img[i]=QString(":/image/")+skin+QString("/")+QString::number(i+1)+QString(".png");
+            icon[i].addFile(img[i]);
+        }
 
+    });
+    connect(colorfulSkin,&QAction::triggered,[=](){const QString str="colorful";skin=str;currentSkin->setText(str);    QString img[9];
+        for(int i=0;i<9;i++){
+            img[i]=QString(":/image/")+skin+QString("/")+QString::number(i+1)+QString(".png");
+            icon[i].addFile(img[i]);
+        }
 
+    });
+    //connect(colorfulSkin,&QAction::triggered,[=](){const QString str="colorful";skin=str;currentSkin->setText(str);});
+    connect(dinosaurSkin,&QAction::triggered,[=](){const QString str="dinosaur";skin=str;currentSkin->setText(str);    QString img[9];
+        for(int i=0;i<9;i++){
+            img[i]=QString(":/image/")+skin+QString("/")+QString::number(i+1)+QString(".png");
+            icon[i].addFile(img[i]);
+        }
 
+    });
+    //connect(dinosaurSkin,&QAction::triggered,[=](){const QString str="dinosaur";skin=str;currentSkin->setText(str);});
+    connect(jointSkin,&QAction::triggered,[=](){const QString str="joint";skin=str;currentSkin->setText(str);    QString img[9];
+        for(int i=0;i<9;i++){
+            img[i]=QString(":/image/")+skin+QString("/")+QString::number(i+1)+QString(".png");
+            icon[i].addFile(img[i]);
+        }
+
+    });
+    //connect(jointSkin,&QAction::triggered,[=](){const QString str="joint";skin=str;currentSkin->setText(str);});
+    connect(lightSkin,&QAction::triggered,[=](){const QString str="light";skin=str;currentSkin->setText(str);    QString img[9];
+        for(int i=0;i<9;i++){
+            img[i]=QString(":/image/")+skin+QString("/")+QString::number(i+1)+QString(".png");
+            icon[i].addFile(img[i]);
+        }
+
+    });
+    //connect(lightSkin,&QAction::triggered,[=](){const QString str="light";skin=str;currentSkin->setText(str);});
+    connect(pokerSkin,&QAction::triggered,[=](){const QString str="poker";skin=str;currentSkin->setText(str);    QString img[9];
+        for(int i=0;i<9;i++){
+            img[i]=QString(":/image/")+skin+QString("/")+QString::number(i+1)+QString(".png");
+            icon[i].addFile(img[i]);
+        }
+
+    });
+    //connect(pokerSkin,&QAction::triggered,[=](){const QString str="poker";skin=str;currentSkin->setText(str);});
 
     //点击游戏帮助后弹出一个消息对话框
     connect(ui->btn_help,&QPushButton::clicked,[=](){
@@ -487,9 +596,11 @@ Widget::Widget(QWidget *parent)
             for(int j=0;j<9;j++)
             {
                 num[i][j]++;
-                set_Num(i,j,num[i][j]);//我们这里还有记好我们生成的数独，因为我们使用查看答案还是要用到的
+                //set_Num(i,j,num[i][j]);//我们这里还有记好我们生成的数独，因为我们使用查看答案还是要用到的
             }
         }
+        shuffle(num,10);//打乱
+        for(int i=0;i<9;i++)for(int j=0;j<9;j++)set_Num(i,j,num[i][j]);//需要打乱后再set
         //调试代码
         //for(int i=0;i<9;i++)
                 //cout<<num[i][0]<<" "<<num[i][1]<<" "<<num[i][2]<<" "<<num[i][3]<<" "<<num[i][4]<<" "<<num[i][5]<<" "<<num[i][6]<<" "<<num[i][7]<<" "<<num[i][8];
