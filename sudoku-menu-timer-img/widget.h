@@ -37,9 +37,6 @@ public:
 private slots:
     void updateTimer();           // 计时//这里也是计时用
 private:
-    template<int n,int m>
-    void shuffle(int (&mat)[n][m],int nShuffle=1);
-private:
     Ui::Widget *ui;
     int _num[9][9];//预设的9*9数独
     QPushButton _btn[9][9];//9*9的按钮
@@ -48,6 +45,5 @@ private:
     QTimer *timer;     // 计时器//也是计时用
     QLabel *timeLabel; // 计时数字
     QIcon icon[18];
-    int type=0;
 };
 #endif // WIDGET_H

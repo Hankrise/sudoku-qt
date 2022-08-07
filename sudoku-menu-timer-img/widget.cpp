@@ -13,10 +13,7 @@
 #include<QString>
 #include<QTimer>
 #include"mypushbutton.h"
-#include<QTime>
-#include<QMainWindow>
-#include"highscore.h"
-#include"scoreinput.h"
+
 #define cout qDebug().noquote().nospace()
 //我这里#define是为了调试方便
 
@@ -72,14 +69,9 @@ void Widget::create(int cnt)//随机生成一个一定有解的状态，cnt表�
             set_Num(i,j,num[i][j]);//我们这里还有记好我们生成的数独，因为我们使用查看答案还是要用到的
         }
     }
-    for(int i=0;i<9;i++)
-            cout<<num[i][0]<<" "<<num[i][1]<<" "<<num[i][2]<<" "<<num[i][3]<<" "<<num[i][4]<<" "<<num[i][5]<<" "<<num[i][6]<<" "<<num[i][7]<<" "<<num[i][8];
-
-    shuffle(num,10);//打乱
-    for(int i=0;i<9;i++)for(int j=0;j<9;j++)set_Num(i,j,num[i][j]);//需要打乱后再set
     //调试代码
-    for(int i=0;i<9;i++)
-            cout<<num[i][0]<<" "<<num[i][1]<<" "<<num[i][2]<<" "<<num[i][3]<<" "<<num[i][4]<<" "<<num[i][5]<<" "<<num[i][6]<<" "<<num[i][7]<<" "<<num[i][8];
+    //for(int i=0;i<9;i++)
+            //cout<<num[i][0]<<" "<<num[i][1]<<" "<<num[i][2]<<" "<<num[i][3]<<" "<<num[i][4]<<" "<<num[i][5]<<" "<<num[i][6]<<" "<<num[i][7]<<" "<<num[i][8];
     bool s[81]={0};
     int count=0;
     //确定保留的数的位置
@@ -215,12 +207,12 @@ Widget::Widget(QWidget *parent)
     }
     //选择难度
     QMessageBox* choice=new QMessageBox(this);
-    choice->setWindowTitle(QStringLiteral("难度选择"));
-    choice->setText(QStringLiteral("请选择数独题目难度："));
+    choice->setWindowTitle("Your difficulty choice");
+    choice->setText("  Please select the game difficulty.");
     choice->setStandardButtons(QMessageBox::Yes | QMessageBox::Cancel | QMessageBox::Ok);
-    choice->setButtonText(QMessageBox::Yes,QStringLiteral("简单模式"));
-    choice->setButtonText(QMessageBox::Cancel,QStringLiteral("困难模式"));
-    choice->setButtonText(QMessageBox::Ok,QStringLiteral("普通模式"));
+    choice->setButtonText(QMessageBox::Yes,"simple");
+    choice->setButtonText(QMessageBox::Cancel,"hard");
+    choice->setButtonText(QMessageBox::Ok,"middle");
     choice->setDefaultButton(QMessageBox::Yes);//默认难度为简单
     auto tmp=choice->exec();
     cnt=0;//cnt是初始给玩家的梳数字数
@@ -228,30 +220,22 @@ Widget::Widget(QWidget *parent)
     {   timerSeconds=0;
         create(40);
         cnt=40;
-        type=1;
-         ui->diffShower->setTitle(QStringLiteral("简单模式"));
     }
     else if(tmp==QMessageBox::Ok)//选择中等难度
     {
         timerSeconds=0;
         create(32);
         cnt=32;
-        type=2;
-        ui->diffShower->setTitle(QStringLiteral("普通模式"));
     }
     else if(tmp==QMessageBox::Cancel)//选择困难难度
     {
         timerSeconds=0;
         create(24);
         cnt=24;
-        type=3;
-        ui->diffShower->setTitle(QStringLiteral("困难模式"));
     }
 
 
     connect(ui->actionsimple,&QAction::triggered,[=](){
-        type=1;
-        ui->diffShower->setTitle(QStringLiteral("简单模式"));
         timerSeconds=0;
         timeLabel->setText("Time: " + QString::number(timerSeconds) + " s");
         timer->start(1000);
@@ -390,21 +374,14 @@ Widget::Widget(QWidget *parent)
                 timerSeconds=0;
                 create(32);
                 cnt=32;
-                type=2;
-                ui->diffShower->setTitle(QStringLiteral("普通模式"));
+
     });
     connect(ui->actionhard,&QAction::triggered,[=](){
                 clearAllNum();
                 timerSeconds=0;
                 create(24);
                 cnt=24;
-                type=3;
-                ui->diffShower->setTitle(QStringLiteral("困难模式"));
 
-    });
-    connect(ui->actionHighScore,&QAction::triggered,[=](){
-        QMainWindow* hs=new highscore();
-        hs->show();
     });
 
 
@@ -626,26 +603,18 @@ Widget::Widget(QWidget *parent)
 
         {
            // QMessageBox acceptBox(QMessageBox::information(this,"congratulations","Accepted"));
-           /* QMessageBox MyBox(QMessageBox::Question,("Bingo"),QStringLiteral("\n\n恭\n喜\n你\n!"));
+            QMessageBox MyBox(QMessageBox::Question,("Bingo"),("\n\n恭\n喜\n你\n!"));
             QPixmap map(":/image/sun.png");
 
             MyBox.setIconPixmap(QPixmap(":/image/sun.png"));
             MyBox.exec();
-            */
-
-            //弹出恭喜，输入姓名，写入数据库
-            QMainWindow* si=new scoreinput(nullptr,type,timerSeconds);
-            si->show();
-
-
-
         }
         else
 
         {   //Icon _iconA;
             //_iconA.addFile(QString::fromUtf8(":/image/1.png"), QSize(50,50), QIcon::Normal, QIcon::Off);
             //QMessageBox::information(this,"what a pity","Wrong Answer");
-            QMessageBox MyBox(QMessageBox::Question,"Bingo",QStringLiteral("\n继\n续\n努\n力\n!"));
+            QMessageBox MyBox(QMessageBox::Question,"Bingo","\n继\n续\n努\n力\n!");
             MyBox.setIconPixmap(QPixmap(":/image/duck.png"));
             MyBox.exec();
         }
@@ -781,50 +750,3 @@ Widget::~Widget()
     delete ui;
 }
 
-template<int n, int m>
-void Widget::shuffle(int (&mat)[n][m], int nShuffle)
-{
-    int unShf[9][9];
-    memcpy(unShf,mat,sizeof(unShf));
-    QRandomGenerator rndShuffle;
-    //rndShuffle.seed(time(0));
-    rndShuffle.seed(QTime(0,0,0).secsTo(QTime::currentTime()));
-    while(nShuffle--){
-        bool rFlag[9]={0};
-        bool cFlag[9]={0};
-        int rShf[9]={0};
-        int cShf[9]={0};
-        int tmp=0;
-        for(int i=0;i<9;){
-            tmp=rndShuffle()%3+(i/3)*3;
-            if(!rFlag[tmp]){
-                rFlag[tmp]=1;
-                rShf[i]=tmp;
-                i++;
-            }
-        }
-        for(int i=0;i<9;){
-            tmp=rndShuffle()%3+(i/3)*3;
-            if(!cFlag[tmp]){
-                cFlag[tmp]=1;
-                cShf[i]=tmp;
-                i++;
-            }
-        }
-
-        for(int i=0;i<9;i++){
-            for(int j=0;j<9;j++){
-                mat[i][j]=unShf[rShf[i]][j];
-            }
-        }
-        memcpy(unShf,mat,sizeof(unShf));
-       for(int i=0;i<9;i++){
-            for(int j=0;j<9;j++){
-                mat[i][j]=unShf[i][cShf[j]];
-            }
-        }
-   //cout<<rShf[0]<<" "<<rShf[1]<<" "<<rShf[2]<<" "<<rShf[3]<<" "<<rShf[4]<<" "<<rShf[5]<<" "<<rShf[6]<<" "<<rShf[7]<<" "<<rShf[8];
-   //cout<<cShf[0]<<" "<<cShf[1]<<" "<<cShf[2]<<" "<<cShf[3]<<" "<<cShf[4]<<" "<<cShf[5]<<" "<<cShf[6]<<" "<<cShf[7]<<" "<<cShf[8];
-   //cout<<endl;
-   }
-}

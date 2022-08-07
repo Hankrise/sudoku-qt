@@ -8,6 +8,8 @@
 
 # 项目笔记
 
+项目主目录为 sudoku ，其他目录为同学写的待合并的代码，参考代码，或者辅助demo代码。
+
 ## 220805_shuffle
 
 这个参考《编程之美》的数独生成算法太有规律了
@@ -39,3 +41,25 @@
 ![](pics/sqlite_02.png)
 
 ![](pics/sqlite_03.png)
+
+## 220806_shuffle-highscore-merged
+
+同学先行合并了难度选择菜单、计时器、使用图片代替数字进行选择与显示的功能。目录为 sudoku-menu-timer-img 。
+
+在此基础之上进行修改，合并到主目录 sudoku ，进行功能追加。
+
+- 修复部分情况没有调用打乱函数的bug，有几处忘记调用了
+- 实现了分数提交页面
+- 实现了显示排行榜功能，但是折叠在了更多菜单里
+- 部分界面把英文替换为中文
+- 菜单栏新增了当前难度的显示
+
+![](pics/220806_shuffle-highscore-merged-01.png)
+
+![](pics/220806_shuffle-highscore-merged-02.png)
+
+![](pics/220806_shuffle-highscore-merged-03.png)
+
+![](pics/220806_shuffle-highscore-merged-04.png)
+
+![](pics/220806_shuffle-highscore-merged-05.png)
