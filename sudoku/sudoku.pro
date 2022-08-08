@@ -48,3 +48,4 @@ RESOURCES += \
     Resources.qrc
 
 DISTFILES +=
+RC_ICONS = s4.ico

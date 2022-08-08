@@ -10,9 +10,13 @@
 
 使用 Qt 5.15.2 (MSVC 2019 32-bit)
 
+release已发布 见 release\release_single_file_ver1.0\sudoku-ver1.0-32bit.exe
+
 # 项目笔记
 
 项目主目录为 sudoku ，其他目录为同学写的待合并的代码，参考代码，或者辅助demo代码。
+
+编译以及打包好的程序在 release 文件夹。
 
 ## 220805_shuffle
 
@@ -129,6 +133,7 @@ sudoku-start 目录为同学单独写的开始界面。
 - 切换难度后，数独按钮无法点击。---已修改
 - 修改菜单栏大小--ok
 - 为各种widget以及窗口补小图标，补图片，修改文字样式---ok,可能改不全，大概可以了
+- 修改数独按钮大小---ok
 - 修改按钮样式---ok
 - 各种其他美化
 
@@ -145,3 +150,22 @@ sudoku-start 目录为同学单独写的开始界面。
 ![](pics/220807_sudoku-total-merge-010.png)
 ![](pics/220807_sudoku-total-merge-011.png)
 ![](pics/220807_sudoku-total-merge-012.png)
+
+## 220808_release_ver1.0
+
+编译以及打包好的程序在 release 文件夹
+
+- release_no_ico_ver1.0 为一开始不会给exe加图标的版本
+- release_with_ico_ver1.0 为添加了.ico图标的版本，少量改动也更新到 sudoku 主目录中
+- release_single_file_ver1.0 为打包的单文件exe版本
+
+学习笔记：
+
+- png 转 ico 文件： 使用 https://www.aconvert.com/cn/icon/png-to-ico/
+这里我勾选了多种分辨率,其实应该无所谓
+![](pics/220808_release_ver1.0-001.png)
+- 将 ico 文件添加到Qt程序： 参考 https://blog.csdn.net/luolaihua2018/article/details/109571852
+ico文件放在pro同一目录，同时 pro 文件最后一行添加 RC_ICONS = xxx.ico
+- 使用Enigma Virtual Box 打包成单文件exe： 参考 https://blog.csdn.net/qq_32483145/article/details/51169518
+切记不要把exe所在的这一级目录拖进去，只托该目录中除了exe文件以外的其他文件即可
+![](pics/220808_release_ver1.0-002.png)
